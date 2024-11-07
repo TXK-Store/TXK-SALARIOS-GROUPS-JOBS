@@ -1,4 +1,3 @@
-Aqui está um exemplo de um README para o seu script de pagamento automático para trabalhos e grupos VIP em RedM. Esse README inclui detalhes essenciais para que desenvolvedores entendam como configurar e usar o script no futuro.
 
 ---
 
