@@ -81,6 +81,146 @@ Config.Jobs["miner"] = 3        -- Novo trabalho de minerador com salário de $3
 Config.Groups["vip_esmeralda"] = 25 -- Novo grupo VIP "Esmeralda" com salário de $25
 ```
 
+## Como configurar o webhook do Discord
+
+### 1. Criar o Webhook no Discord
+
+1. Vá para o canal do Discord onde você quer receber as notificações
+2. Clique com o botão direito no canal
+3. Selecione "Editar Canal"
+4. Vá para a aba "Integrações"
+5. Clique em "Webhooks"
+6. Clique em "Novo Webhook"
+7. Dê um nome ao webhook (ex: "Sistema de Salários")
+8. Copie a URL do webhook
+
+### 2. Configurar no arquivo config.lua
+
+Abra o arquivo `config.lua` e localize a seção `Config.Discord`:
+
+```lua
+Config.Discord = {
+    WebhookURL = "SUA_URL_DO_WEBHOOK_AQUI", -- Cole a URL do webhook aqui
+    BotName = "Sistema de Salários", -- Nome do bot que enviará as mensagens
+    BotAvatar = "", -- URL do avatar do bot (opcional)
+    Enabled = true, -- Habilita/desabilita o webhook
+    Color = 0x00ff00, -- Cor da embed (verde)
+    FooterText = "Sistema de Salários TXK", -- Texto do rodapé da embed
+    FooterIcon = "", -- Ícone do rodapé (opcional)
+    
+    -- Mensagens personalizáveis
+    Messages = {
+        SalaryPaid = "💰 Salário pago com sucesso!",
+        JobSalary = "💼 Salário de trabalho recebido",
+        GroupSalary = "👑 Salário VIP recebido",
+        SteamSalary = "🎮 Salário especial recebido"
+    }
+}
+```
+
+### 3. Personalização
+
+#### Cores disponíveis:
+- `0x00ff00` - Verde
+- `0xff0000` - Vermelho
+- `0x0000ff` - Azul
+- `0xffff00` - Amarelo
+- `0xff00ff` - Magenta
+- `0x00ffff` - Ciano
+- `0xffffff` - Branco
+- `0x000000` - Preto
+
+#### Exemplo de configuração personalizada:
+
+```lua
+Config.Discord = {
+    WebhookURL = "https://discord.com/api/webhooks/123456789/abcdef...",
+    BotName = "🏦 Banco Central",
+    BotAvatar = "https://exemplo.com/avatar.png",
+    Enabled = true,
+    Color = 0x00ff00,
+    FooterText = "🏆 Servidor TXK - Sistema de Salários",
+    FooterIcon = "https://exemplo.com/icon.png",
+    
+    Messages = {
+        SalaryPaid = "🎉 Salário depositado na conta!",
+        JobSalary = "💼 Pagamento de trabalho realizado",
+        GroupSalary = "👑 Benefício VIP creditado",
+        SteamSalary = "🎮 Bônus especial depositado"
+    }
+}
+```
+
+### 4. Desabilitar o webhook
+
+Para desabilitar o webhook, você pode:
+
+1. Deixar o `WebhookURL` vazio: `WebhookURL = ""`
+2. Ou definir `Enabled = false`
+
+### 5. Informações enviadas no webhook
+
+O webhook enviará as seguintes informações:
+- **Nome do jogador**
+- **Valor do salário**
+- **Tipo de salário** (trabalho, grupo VIP, ou Steam ID especial)
+- **Trabalho** (se aplicável)
+- **Grupo** (se aplicável)
+- **📋 Identificação:**
+  - **Discord:** @ do jogador (menciona o usuário)
+  - **Steam:** Steam ID do jogador
+  - **Character ID:** ID do personagem no banco de dados
+- **Data e hora** do pagamento
+
+### 6. Exemplo de mensagem no Discord
+
+```
+💰 Salário pago com sucesso!
+
+Jogador: John Doe
+Valor: $50
+Tipo: 👑 Salário VIP recebido
+Grupo: Ouro
+
+📋 Identificação:
+Discord: @JohnDoe#1234
+Steam: steam:110000108695de4
+Character ID: 12345
+```
+
+### 7. Funcionalidades de Identificação
+
+#### Discord ID (@ do jogador)
+- O sistema automaticamente detecta o Discord ID do jogador
+- Usa a formatação `<@ID>` para mencionar o jogador no Discord
+- Se o jogador não tiver Discord conectado, não será exibido
+
+#### Steam ID
+- Mostra o Steam ID completo do jogador
+- Útil para identificação e logs administrativos
+- Formato: `steam:110000108695de4`
+
+#### Character ID
+- ID único do personagem no banco de dados VORP
+- Útil para consultas administrativas e logs
+- Formato: `12345`
+
+### 8. Troubleshooting
+
+Se o webhook não estiver funcionando:
+
+1. Verifique se a URL do webhook está correta
+2. Certifique-se de que `Enabled = true`
+3. Verifique se o webhook ainda existe no Discord
+4. Teste a URL do webhook em um serviço como webhook.site
+5. Verifique se o jogador tem Discord conectado para receber menções
+
+### 9. Segurança
+
+⚠️ **Importante**: 
+- Nunca compartilhe a URL do webhook publicamente, pois ela pode ser usada para enviar mensagens no seu canal do Discord
+- As informações de identificação são úteis para administradores, mas devem ser tratadas com confidencialidade
+- O Discord ID permite mencionar jogadores diretamente no canal 
 ---
 
 ## Observações
